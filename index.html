@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+        }
+
+
+        .header {
+            height: 70px;
+            line-height: 70px;
+            background-color: #354457;
+            color: #fff;
+            font-family: arial;
+        }
+
+
+        .header .logo {
+            width: 200px;
+            padding-left: 20px
+        }
+
+        .header img {
+            margin-left: 30px;
+            height: 30px;
+            width: 30px;
+            vertical-align: middle;
+            /* line-height: 70px;
+            background-color: #354457; */
+        }
+
+        .left-menu {
+            background-color: #4d5e70;
+            width: 200px;
+            height: calc(100% - 70px);
+            float: left;
+        }
+
+
+        .left-menu dd,
+        .left-menu dt {
+            line-height: 40px;
+            height: 40px;
+            color: #b3bcc5;
+
+        }
+
+        .left-menu dt {
+            font-weight: bold;
+            padding-left: 10px;
+        }
+
+        .left-menu dd {
+            font-size: 14px;
+            padding-left: 40px;
+        }
+
+
+        .left-menu dd:hover {
+            color: #354457;
+            background-color: rgba(255, 255, 255, 0.5)
+        }
+
+        .right-content {
+            float: right;
+            height: calc(100% - 70px);
+            width: calc(100% - 200px);
+        }
+
+        .right-content .student-list,
+        .right-content .student-add {
+            height: 100%;
+            width: 100%;
+        }
+
+        .right-content .student-list table {
+            width: 100%;
+        }
+
+
+        .right-content .student-list thead {
+            background-color: #e3e8ee;
+            font-size: 14px;
+            /* width:100%; */
+        }
+
+        .right-content .student-list thead th {
+            background-color: #e3e8ee;
+            font-size: 14px;
+            width: 12%;
+            height: 40px;
+            color: #646987
+        }
+
+        .right-content .student-list tbody {
+            font-size: 14px;
+            background-color: 14px;
+        }
+
+        .right-content .student-list tbody td {
+            text-align: center;
+            background-color: #eee;
+            height: 40px;
+        }
+
+        .right-content .student-list tbody td .btn {
+            outline: none;
+            /* height:20px; */
+            padding: 3px 10px;
+            text-align: center;
+            /* line-height: 20px; */
+            font-size: 12px;
+            border: none;
+            color: #fff;
+        }
+
+        .right-content .student-list tbody td .btn.edit {
+            background-color: #5cb85c;
+        }
+
+        .right-content .student-list tbody td .btn.delete {
+            background-color: #d9534f;
+        }
+
+        .right-content .student-list tbody td .btn.edit:hover {
+            background-color: #398439;
+        }
+
+        .right-content .student-list tbody td .btn.delete:hover {
+            background-color: #c9302c;
+        }
+
+        form {
+            width: 400px;
+            margin: 10px auto 0px;
+        }
+
+        form .item {
+            margin: 10px 0;
+        }
+
+        form .item label:not(.sexLabel) {
+            display: inline-block;
+            width: 100px;
+            text-align: right;
+        }
+
+        form .item input[type="submit"],
+        form .item input[type="reset"] {
+            padding: 2px 25px;
+            margin-left: 2px;
+            font-size: 14px;
+        }
+
+        .modal h3 {
+            padding: 16px 30px;
+        }
+
+        .modal form {
+            width: 340px;
+        }
+
+
+        .mask {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            margin: auto
+        }
+
+        .content {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            /* background-color:rgba(0, 0, 0, 0.5); */
+            background-color: #fff;
+            width: 500px;
+            height: 450px;
+            margin: auto
+        }
+
+        .content  .close-modal{
+            font-size: 20px;
+            position: absolute;
+            top: 17px;
+            right: 16px;
+            padding: 4px 10px;
+            background-color: rgba(255,255,255, 0.5);
+            border: 1px solid #eee;
+            border-radius: 50%;
+            outline: none;
+        }
+
+        .content  .close-modal:hover{
+
+            background-color:#CCC;
+        }
+
+        .page-btn-wrap {
+          text-align: center;
+          margin-top:5px;
+           
+        }
+
+        .page-btn-wrap button{
+            padding : 5px 10px;
+            outline: none;
+           
+        }
+
+        /* 搜索框部分 */
+        .tool-wrap .tool-item{
+            display:inline-block;
+            margin:5px 10px;
+        }
+
+        .tool-wrap .tool-item input,
+        .tool-wrap .tool-item select
+        /* .tool-wrap .tool-item button */
+        {
+            height:25px;
+            border-radius: 5px;
+
+        }
+
+        .tool-wrap .tool-item input{
+            outline: none;
+            border:1px solid #ccc;
+            padding-left:5px;;
+        }
+        
+        .tool-wrap .tool-item button{
+            padding: 3px 10px;
+            vertical-align: middle;
+            font-size: 16px;
+            line-height: 16px;
+            outline: none;
+            border-radius: 5px;
+        }
+
+
+    </style>
+    <link rel="icon" href="./images/logo.ico">
+</head>
+
+<body>
+    <div class="header">
+
+        <img src="./images/logo.png" alt="">
+        <span>渡一教育</span>
+
+    </div>
+
+    <div class="left-menu">
+        <dl>
+            <dt>学生管理</dt>
+            <dd data-id="student-list">学生列表</dd>
+            <dd data-id="student-add">新增学生</dd>
+        </dl>
+    </div>
+    <div class="right-content">
+        <div class="part-div student-list" id="student-list" style="display:none">
+            <div class="tool-wrap">
+                <div class="tool-item">
+                   <input type="text" id="search-content">
+                   <select name="search-sex" id="search-sex">
+                        <option value="-1">全部</option>
+                        <option value="0">男</option>
+                        <option value="1">女</option>
+                    </select>
+                    <button id="search-btn">搜索</button>
+                </div>
+              
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>学号</th>
+                        <th>姓名</th>
+                        <th>性别</th>
+                        <th>邮箱</th>
+                        <th>年龄</th>
+                        <th>手机号</th>
+                        <th>住址</th>
+                        <th>操作</th>
+                    </tr>
+                <tbody id="table-content">
+                    <tr>
+                        <td>0001</td>
+                        <td>小红</td>
+                        <td>女</td>
+                        <td>1111@qq.com</td>
+                        <td>18</td>
+                        <td>13232323232</td>
+                        <td>哈尔滨</td>
+                        <td>
+                            <button class="btn edit">编辑</button>
+                            <button class="btn delete">删除</button>
+                        </td>
+                    </tr>
+                </tbody>
+                </thead>
+            </table>
+            <div class="page-btn-wrap">
+                <button class="page-btn prev-btn">上一页</button>
+                <button class="page-btn next-btn">下一页</button>
+            </div>
+            <div class="modal" style="display:none">
+                <div class="mask"></div>
+                <div class="content">
+                    <button class="close-modal">×</button>
+                    <h3>编辑表单</h3>
+                    <form id="editForm" action="">
+                        <div class="item"><label for="sNo">学号</label>
+                            <input type="text" name="sNo" id="sNo"></div>
+                        <div class="item"><label for="name">姓名</label>
+                            <input type="text" name="name" id="name"></div>
+                        <div class="item"><label for="">性别</label>
+                            <input type="radio" id="male" name="sex" value="0"><label class="sexLabel"
+                                for="male">男</label>
+                            <input type="radio" id="female" name="sex" value="1"><label class="sexLabel"
+                                for="female">女</label>
+                        </div>
+                        <div class="item"><label for="email">邮箱</label>
+                            <input type="text" name="email" id="email"></div>
+                        <div class="item"><label for="birth">年龄</label>
+                            <input type="number" name="birth" id="birth"></div>
+                        <div class="item"><label for="phone">手机号</label>
+                            <input type="text" name="phone" id="phone"></div>
+                        <div class="item"><label for="address">住址</label>
+                            <input type="text" name="address" id="address"></div>
+                        <div class="item"><label for=""></label>
+                            <input type="submit" value="提交"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="part-div student-add" id="student-add" style="display:none">
+            <form id="addStudentForm" action="">
+                <div class="item"><label for="sNo">学号</label>
+                    <input type="text" name="sNo" id="sNo"></div>
+                <div class="item"><label for="name">姓名</label>
+                    <input type="text" name="name" id="name"></div>
+                <div class="item"><label for="">性别</label>
+                    <input type="radio" id="male" name="sex" value="0"><label class="sexLabel" for="male">男</label>
+                    <input type="radio" id="female" name="sex" value="1"><label class="sexLabel" for="female">女</label>
+                </div>
+                <div class="item"><label for="email">邮箱</label>
+                    <input type="text" name="email" id="email"></div>
+                <div class="item"><label for="birth">年龄</label>
+                    <input type="number" name="birth" id="birth"></div>
+                <div class="item"><label for="phone">手机号</label>
+                    <input type="text" name="phone" id="phone"></div>
+                <div class="item"><label for="address">住址</label>
+                    <input type="text" name="address" id="address"></div>
+                <div class="item"><label for=""></label>
+                    <input type="submit" value="提交"><input type="reset" value="撤销"></div>
+            </form>
+
+        </div>
+
+    </div>
+    </div>
+    <script>
+
+        var IpAddress = 'https://open.duyiedu.com'
+        var appkey = '18270865210_1570689046036';
+        var readerData = [];
+        var page =1;
+        var size =5;
+      
+        var sex = -1;
+        var search = null;
+
+
+        bindEvent();
+        ReaderAllData();
+
+        function bindEvent() {
+            //导航按钮事件
+            var ddList = document.getElementsByTagName('dd');
+            for (var i = 0; i < ddList.length; i++) {
+
+                ddList[i].onclick = function () {
+                    var targetId = this.getAttribute('data-id');
+
+                    var pages = document.getElementsByClassName('part-div');
+                    for (var x = 0; x < pages.length; x++) {
+                        pages[x].style.display = "none";
+                    }
+                    var target = document.getElementById(targetId).style.display = 'block'
+                }
+            }
+
+            //添加表单submit事件
+            var addForm = document.getElementById('addStudentForm');
+            addForm.onsubmit = function (e) {
+                e.preventDefault();
+                var res = formatForm(addForm);
+                if (res.msg) {
+                    alert(res.msg);
+                } else {
+                    var response = saveData(IpAddress + '/api/student/addStudent', res.data)
+                    if (response && response.msg) {
+                        alert(response.msg)
+                    }
+                    ReaderAllData();
+                }
+
+
+            }
+
+            //添加表单submit事件
+            var editForm = document.getElementById('editForm');
+            editForm.onsubmit = function (e) {
+                e.preventDefault();
+                var res = formatForm(editForm);
+                if (res.msg) {
+                    alert(res.msg);
+                } else {
+                    var response = saveData(IpAddress + '/api/student/updateStudent', res.data)
+                    if (response && response.msg) {
+                        alert(response.msg)
+                    }
+                    ReaderAllData();
+                     var modal = document.getElementsByClassName('modal')[0];
+                     modal.style.display = 'none';
+                }
+
+
+            }
+
+
+
+
+            //編輯和刪除的點擊事件
+            var tbody = document.getElementById('table-content');
+            tbody.addEventListener('click', function (e) {
+                if ([].slice.call(e.target.classList, 0).indexOf('btn') > -1) {
+
+                    if ([].slice.call(e.target.classList, 0).indexOf('edit') > -1) {
+                        var node = readerData[e.target.getAttribute('data-id')];
+                        console.log(node)
+                        modalShow(node)
+                    }
+                    else if ([].slice.call(e.target.classList, 0).indexOf('delete') > -1) {
+                        var node = readerData[e.target.getAttribute('data-id')];
+                        console.log(node)
+                        var response = saveData(IpAddress + '/api/student/delBySno', {sNo:node.sNo ,appkey:appkey})
+                        ReaderAllData();
+                        alert(response.msg);
+                       
+                    }
+
+
+                }
+
+
+            })
+
+            //弹出框消失的事件
+            var modal = document.getElementsByClassName('modal')[0];
+            var closeModal = document.getElementsByClassName('close-modal')[0];
+            closeModal.addEventListener('click', function (e) {
+               
+                    modal.style.display = 'none';
+           
+
+            })
+
+            //分页按钮的事件
+            var nextBtn = document.getElementsByClassName('next-btn')[0];
+            var prevBtn = document.getElementsByClassName('prev-btn')[0];
+
+            nextBtn.onclick = function(e){
+              
+                page++;
+                ReaderAllData() ;
+            }
+
+            prevBtn.onclick = function(e){
+                
+                page--;
+                ReaderAllData() ;
+            }
+
+            //搜索按钮
+            var searchBtn = document.getElementById('search-btn');
+            searchBtn.onclick = function(){
+                search = document.getElementById('search-content').value;
+                sex = document.getElementById('search-sex').value;
+                page = 1;
+                ReaderAllData() ;
+
+            }
+
+
+        }
+
+
+        function formatForm(targetForm) {
+
+            var res = {
+                data: {},
+                msg: ''
+            }
+            var birth = targetForm.birth.value;
+            var name = targetForm.name.value;
+            var address = targetForm.address.value;
+            var sex = targetForm.sex.value;
+            var sNo = targetForm.sNo.value;
+            var email = targetForm.email.value;
+            var phone = targetForm.phone.value;
+
+            if (!birth || !name || !address || !sex || !sNo || !email) {
+                res.msg = "参数缺失"
+                return res;
+            }
+            // sex = addForm.sex.value == 'female' ? 1 : 0;
+
+            res.data = {
+                appkey: appkey,
+                birth: birth,
+                name: name,
+                address: address,
+                sex: sex,
+                sNo: sNo,
+                email: email,
+                phone: phone
+            }
+
+            return res;
+        }
+
+        function saveData(url, param) {
+            var result = null;
+            var xhr = null;
+            if (window.XMLHttpRequest) {
+                xhr = new XMLHttpRequest();
+            } else {
+                xhr = new ActiveXObject('Microsoft.XMLHTTP');
+            }
+            if (typeof param == 'string') {
+                xhr.open('GET', url + '?' + param, false);
+            } else if (typeof param == 'object') {
+                var str = "";
+                for (var prop in param) {
+                    str += prop + '=' + param[prop] + '&';
+                }
+                xhr.open('GET', url + '?' + str, false);
+            } else {
+                xhr.open('GET', url + '?' + param.toString(), false);
+            }
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200) {
+                        result = JSON.parse(xhr.responseText);
+                    }
+                }
+            }
+            xhr.send();
+            return result;
+        }
+
+        function ReaderAllData() {
+            if(search){
+                var response = saveData(IpAddress + '/api/student/searchStudent',
+                { appkey: appkey,sex:sex,search:search,page:page,size:size })
+
+            }else{
+                var response = saveData(IpAddress + '/api/student/findByPage',
+                { appkey: appkey,sex:sex,search:search,page:page,size:size })
+            }
+            
+            if (response && response.status == "success") {
+                readerData = response.data. findByPage ||  response.data.searchList ||response.data;
+                 showPageBtn(response.data.cont)
+                var tbody = document.getElementById('table-content');
+                tbody.innerHTML = '';
+                var html = ''
+
+                readerData.forEach(function (node, index, self) {
+
+                    html += `
+                    <tr>
+                        <td>`+ node.sNo + `</td>
+                        <td>`+ node.name + `</td>
+                        <td>`+ (node.sex == 1 ? '女' : '男') + `</td>
+                        <td>`+ node.email + `</td>
+                        <td>`+ node.birth + `</td>
+                        <td>`+ node.phone + `</td>
+                        <td>`+ node.address + `</td>
+                        <td>
+                            <button class="btn edit"    data-id="`+ index + `"  >编辑</button>
+                            <button class="btn delete"  data-id="`+ index + `"  >删除</button>
+                        </td>
+                    </tr>`
+                })
+
+                tbody.innerHTML = html;
+            }
+        }
+
+        function modalShow(node) {
+            var editForm = document.getElementById("editForm");
+            var modal = document.getElementsByClassName('modal')[0];
+            modal.style.display = 'block';
+            for (var prop in node) {
+
+                if (editForm[prop]) {
+                    editForm[prop].value = node[prop];
+                }
+
+            }
+        }
+
+        function showPageBtn(total){
+
+            var currPage = Math.ceil(total / size) ;
+            var nextBtn = document.getElementsByClassName('next-btn')[0];
+            var prevBtn = document.getElementsByClassName('prev-btn')[0];
+
+            if(currPage <= page){
+                nextBtn.style.display = 'none'
+            }else{
+                nextBtn.style.display = 'inline-block'
+            }
+
+            if(1 == page){
+                prevBtn.style.display = 'none'
+            }else{
+                prevBtn.style.display = 'inline-block'
+            }
+
+
+        }
+
+
+    </script>
+</body>
+
+</html>
